@@ -1,0 +1,24 @@
+version: "3.1"
+services:
+  tuman_app-php:
+    depends_on:
+      - tuman_app-mysql
+    volumes:
+      - .:/app
+
+  tuman_app-mysql:
+    image: mysql:5.7
+    container_name: tuman_app-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: local
+      MYSQL_USER: local
+      MYSQL_PASSWORD: local
+
+  tuman_app-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+    container_name: tuman_app-phpmyadmin
+    ports:
+      - 7402:80
