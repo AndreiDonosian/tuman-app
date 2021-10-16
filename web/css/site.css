@@ -1,0 +1,181 @@
+html,
+body {
+    height: 100%;
+    /* color:white; */
+}
+h1 {
+    color:white;
+}
+.panel {
+    opacity:0.7;
+}
+.pin-detailed{
+    background-image: url('/img/detailed_2.jpg');
+	/* background-repeat: no-repeat; */
+	background-position: center;
+	background-size: cover;
+}
+.top15{
+    margin-top:15%;
+}
+.navbar-inverse{
+    opacity:0.82;
+}
+.preview img{
+    max-width:75px;
+    height:auto;
+}
+.card {
+    color:white;
+}
+.preview video{
+    max-width:75px;
+    height:auto;
+}
+.pin-detailed .back-b, .pin-detailed .exit-b {
+    display:block!important;
+}
+.table-striped tbody tr:nth-child(even) {
+    background-color: lightgrey;
+}
+.fileupload-progress {
+    padding: 20px 0;
+}
+.back-b {
+    background-image: url('/img/back.png');
+    background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+    width:100px;
+    height:100px; 
+    position: absolute;
+    top:15%;
+    right:25px;
+    display: none;
+}
+
+.exit-b {
+    background-image: url('/img/stop.png');
+    background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+    width:100px;
+    height:100px; 
+    position: absolute;
+    top:40%;
+    right:25px;
+    /* display: none; */
+}
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+}
+
+.wrap > .container {
+    padding: 70px 15px 20px;
+}
+
+.footer {
+    height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+.pb-1{
+    padding-bottom: 10px;
+}
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+a.asc:after {
+    content: /*"\e113"*/ "\e151";
+}
+
+a.desc:after {
+    content: /*"\e114"*/ "\e152";
+}
+
+.sort-numerical a.asc:after {
+    content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+    content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+    content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+    content: "\e156";
+}
+
+.grid-view th {
+    white-space: nowrap;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+    padding: 15px;
+    border: none;
+}
+
+@media(max-width:767px) {
+    .nav li > form > button.logout {
+        display:block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 15px;
+    }
+}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+    text-decoration: none;
+}
+
+.nav > li > form > button.logout:focus {
+    outline: none;
+}

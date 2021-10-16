@@ -1,0 +1,142 @@
+                case 'Profile':
+                    $message = "Dear ".$user->username.",\n\nYour profile from imagefap has been flagged for review.\nThe reason was: $reason.\n\nIf it is found to have violated the terms of service, it will be removed. \n\nIf you have questions about what type of content is prohibited, please review our online FAQ.  ".BASE_HREF."/faq.php\n\nRegards,\n\nImageFap.com";
+                    break;
+
+                case 'Avatar':
+                    $message = "Dear ".$user->username.",\n\nUnfortunately your avatar does not meet the requirements that ImageFap imposes on uploaded images.\nThe reason was: $reason.\n\n For more information see ".BASE_HREF."/faq.php\n\nRegards,\n\nImageFap Team";
+                    $subject = 'Imagefap.com: Your avatar has been removed';
+                    break;
+
+                case "Blog":
+                    $title = QueryToString("
+                        SELECT
+                            `title`
+                        FROM
+                            `blog_topics`
+                        WHERE
+                            `topicid` = $id
+                        LIMIT 1
+                    ");
+
+                    $message = "Dear ".$user->username.",\n\nYour blog on imagefap called: $title has been marked for review for the following reason: $reason. \n\nIf you have questions about what type of content is prohibited, please check the imagefap forum ".BASE_HREF."/forum/viewtopic.php?f=4&t=2967 and ".BASE_HREF."/forum/viewtopic.php?f=4&t=2966.\nSubsequent violations can result in the loss of your account so please read the policy on our upload carefully before uploading photos.\n\nRegards,\n\nImageFap.com";
+                    break;
+
+                case "Gallery":
+                    $arr = QueryToArray("
+                        SELECT
+                            `title`, `description`
+                        FROM
+                            `gallery`
+                        WHERE
+                            `galleryid` = $id
+                        LIMIT 1
+                    ");
+
+                
+                   $extra_info = "Flagged galleries cannot be accessed any more. Please wait for admin's decision on this issue.\n\n";
+                    if ($action_name == 'deleted')
+                    {
+                        $extra_info = "This decision is final. Once the content is deleted by admin it cannot be restored.\n\n";
+                    }
+
+                    $message = <<<EOL
+                    Dear {$user_name},
+
+
+                    Due to a violation of our acceptable use policy we {$action_name} your gallery.
+
+                    The reason was: {$reason}
+
+                    Gallery title: {$title}
+
+                    Gallery ID: {$gallery_id}
+
+
+                    {$extra_info}
+                    If you want to know more about flagging, please follow this link:
+                    {$base_href}/forum/viewtopic.php?f=18&t=10131
+
+                    Please read carefully our upload policy:
+                    {$base_href}/faq.php
+
+                    Also, please make sure that you are not uploading copyrighted material:
+                    {$base_href}/forum/viewtopic.php?f=18&t=2967
+
+
+                    Remember, we want Imagefap to be a community where everyone feels comfortable and
+                    respected - it's up to all of us to make sure this happens. By paying attention
+                    to these issues you are giving us more time to handle maintenance and feature development.
+
+
+
+                    Enjoy your time here,
+                    ImageFap.com
+                    EOL;
+                    break;
+
+                case "Image":
+                    $arr = QueryToArray("
+                        SELECT
+                            description,
+                            filename,
+                            loc_full,
+                            extension
+                        FROM
+                            `images`
+                                JOIN `images_filenames` ON `images`.`id` = `images_filenames`.`id`
+                        WHERE
+                            `images`.`imageid` = $id
+                        LIMIT 1
+                    ");
+
+                    $extra_info = "If this image is considered illegal by law, it will be deleted immediately. The image url will be no longer available for you to review.\n\n";
+                    $img_url_text = '';
+                    if ($action_name == 'deleted')
+                    {
+                        $extra_info = "This decision is final. Once the content is deleted by admin it cannot be restored.\n\n";
+                    }
+                    else
+                    {
+                        $loc_full = $arr[0]->loc_full;
+                        $extension = $arr[0]->extension;
+                        // $img_url = "http://fap.to/images/full/{$loc_full}/" . substr($id, 0, 3) . "/{$id}{$extension}";
+                        $img_url = "http://fap.to/images/thumb/{$loc_full}/" . substr($id, 0, 3) . "/{$id}{$extension}";
+                        $img_url_text = "Image URL: $img_url\n\n";
+                    }
+
+                    $message = <<<EOL
+                    Dear {$user_name},
+
+
+                    Due to a violation of our acceptable use policy we {$action_name} your image.
+
+                    The reason was: {$reason}
+
+                    Image title: $title
+
+                    {$img_url_text}
+                    {$extra_info}
+
+                    If you want to know more about flagging, please follow this link:
+                    {$base_href}/forum/viewtopic.php?f=18&t=10131
+
+                    Please read carefully our upload policy:
+                    {$base_href}/faq.php
+
+                    Also, please make sure that you are not uploading copyrighted material:
+                    {$base_href}/forum/viewtopic.php?f=18&t=2967
+
+
+                    Remember, we want Imagefap to be a community where everyone feels comfortable and
+                    respected - it's up to all of us to make sure this happens. By paying attention
+                    to these issues you are giving us more time to handle maintenance and feature development.
+
+
+
+                    Enjoy your time here,
+                    ImageFap.com
+                    EOL;
+                    break;
+
+                default:
+                    $message = "Dear ".$user->username.",\n\nYour submission to imagefap has recently been removed for the following reason: $reason. \nIf you have questions about what type of content is prohibited, please review our online FAQ.  ".BASE_HREF."/faq.php\nSubsequent violations can result in the loss of your account.\n\nRegards,\n\nImageFap.com";
